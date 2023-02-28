@@ -46,7 +46,9 @@ public class P02FourInaRow {
         boolean played = false;
         System.out.println("Choose a column (Player "+ player + ")");
         int col = Integer.parseInt(keyboard.nextLine());
-        if(col > NCOLS) play(player, board, keyboard);
+        // Verify if it's an real column
+        if(col > NCOLS || col < 1) play(player, board, keyboard);
+        // See which row it's available to play
         for(int i = NROWS-1; i >= 0; i--) {
             if(board[col-1][i] == 0) {
                 board[col-1][i] = player;
@@ -54,6 +56,7 @@ public class P02FourInaRow {
                 break;
             }
         }
+        // If the chosen column was full, ask for a new column
         if(!played) {
             play(player, board, keyboard);
         }
@@ -73,9 +76,11 @@ public class P02FourInaRow {
      */
     private static boolean lastPlayerWon(char[][] board, int col) {
         int row = NROWS-1;
-        while(board[col][row] == 0) {
+        // Find the top character on the received column
+        while(board[col][row] == 0 && row > 0) {
             row--;
         }
+        // Verify possible directions for 4 equal characters in a row
         for(int i = 0; i<=4;i++) {
             if(checkAll(board, col, row, i)) return true;
         }
@@ -86,19 +91,19 @@ public class P02FourInaRow {
         switch(n) {
             // left
             case 0:
-                check(board, col, row, -1, 0);
+                return check(board, col, row, -1, 0);
             // right
             case 1:
-                check(board, col, row, 1, 0);
+                return check(board, col, row, 1, 0);
             // down
             case 2:
-                check(board, col, row, 0, -1);
+                return check(board, col, row, 0, -1);
             // left diagonal
             case 3:
-                check(board, col, row, -1, -1);
+                return check(board, col, row, -1, -1);
             // right diagonal
             case 4:
-                check(board, col, row, 1, -1);
+                return check(board, col, row, 1, -1);
 
         }
         return false;
@@ -108,7 +113,11 @@ public class P02FourInaRow {
         char player = board[col][row];
         int count = 0;
         for(int k = 0; k < 4; k++) {
-            if(board[col+i*k][row+j*k] == player) count++;
+            // Verify if we are checking a position inside the board
+            if((col+i*k) >= 0 && (col+i*k) < NCOLS && (row+j*k) >= 0 && (row+j*k) < NROWS) {
+                // Checking if it's always the same character
+                if(board[col+i*k][row+j*k] == player) count++;
+            }
         }
         return count == 4;
     }
@@ -120,7 +129,11 @@ public class P02FourInaRow {
      * @return True if there is, at least, one free position on board
      */
     private static boolean existsFreePlaces(char[][] board) {
-        // TODO
+        for(int i=0;i<NCOLS;i++) {
+            for(int j=0;j<NROWS;j++) {
+                if(board[i][j] == 0) return true;
+            }
+        }
         return false;
     }
 
@@ -160,15 +173,9 @@ public class P02FourInaRow {
 
         // show final result
         switch (winner) {
-            case ' ':
-                System.out.println("We have a draw....");
-                break;
-            case 'A':
-                System.out.println("Winner: Player A. Congratulations...");
-                break;
-            case 'B':
-                System.out.println("Winner: Player B. Congratulations...");
-                break;
+            case ' ' -> System.out.println("We have a draw....");
+            case 'A' -> System.out.println("Winner: Player A. Congratulations...");
+            case 'B' -> System.out.println("Winner: Player B. Congratulations...");
         }
 
         // close keyboard

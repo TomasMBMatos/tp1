@@ -39,9 +39,34 @@ public class P03WorkWithStrings {
      * @return o resultado da comparação
      */
     private static int compareStrings(String s1, String s2) {
-        // TODO
-        return 0;
+        if(s1 == null && s2 == null) return 0;
+        else if(s1 == null) return -1;
+        else if(s2 == null) return 1;
+
+        // Searching for diferent characters to compare
+        for (int i = 0; i < s1.length() &&
+                i < s2.length(); i++) {
+            if ((int)s1.charAt(i) ==
+                    (int)s2.charAt(i)) {
+            }
+            else {
+                if(s1.charAt(i) < s2.charAt(i)) return -1*(i+1);
+                if(s1.charAt(i) > s2.charAt(i)) return i+1;
+            }
+        }
+
+        if (s1.length() < s2.length()) {
+            return -1*(s1.length()+1);
+        }
+        else if (s1.length() > s2.length()) {
+            return (s2.length()+1);
+        }
+
+        else {
+            return 0;
+        }
     }
+
 
     /**
      * Auxiliary method that call compareStrings with two strings
