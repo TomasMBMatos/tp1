@@ -164,7 +164,7 @@ public class Livro {
      * Deve mostrar na consola a informação do livro precedida do prefixo
      */
     public void print(String prefix) {
-        System.out.println(prefix + String.format(" %s",this.toString()));
+        System.out.println(prefix + String.format(" %s", this));
     }
 
     /**

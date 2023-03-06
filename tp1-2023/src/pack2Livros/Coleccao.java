@@ -84,7 +84,8 @@ public class Coleccao {
      * com livros iguais. Deve utilzar o método getIndexOfLivro.
      */
     public boolean addLivro(Livro livro) {
-        // TODO
+        int idx = getIndexOfLivro(livro.getTitulo());
+
         return false;
     }
 
@@ -106,9 +107,11 @@ public class Coleccao {
      * sempre os menores índices, ou seja, não pode haver nulls entre os livros
      */
     public Livro remLivro(String titulo) {
-
-        getIndexOfLivro(titulo);
-        return null;
+        int idx = getIndexOfLivro(titulo);
+        Livro[] copy = new Livro[livros.length-1];
+        System.arraycopy(livros, 0, copy, 0, idx);
+        System.arraycopy(livros, idx+1, copy, idx, livros.length-idx-1);
+        return livros[idx];
     }
 
     /**
@@ -133,8 +136,10 @@ public class Coleccao {
      * Deve devolver uma string compatível com os outputs desejados
      */
     public String toString() {
-        // TODO
-        return null;
+//        return titulo + ", editores " + Arrays.toString(editores) + ", "
+//                + numLivros + " livros, " + getNumPaginas() + "p" + getPreco() + "€";
+        return String.format("%s, editores %s, %d livros, %dp %f€",
+                titulo, Arrays.toString(editores), numLivros, getNumPaginas(), getPreco());
     }
 
     /**
@@ -143,7 +148,14 @@ public class Coleccao {
      * utilizar o método mergeWithoutRepetitions
      */
     public String[] getAutoresEditores() {
-        // TODO
+        String[] AE;
+        String[] copy;
+        for(Livro livro : livros) {
+            AE = livro.getAutores();
+            copy = new String[livro.getAutores().length];
+            System.arraycopy(AE, );
+        }
+
         return null;
     }
 
@@ -162,15 +174,15 @@ public class Coleccao {
      * devem utilizar o método mergeWithoutRepetitions
      */
     public boolean equals(Coleccao c) {
-        // TODO
-        return false;
+        return titulo.equals(c.titulo) &&
+                mergeWithoutRepetitions(editores, c.editores) == editores;
     }
 
     /**
      * Mostra uma colecção segundo os outputs desejados
      */
     public void print(String prefix) {
-        // TODO
+        System.out.println(prefix + String.format(" %s", this));
     }
 
     /**

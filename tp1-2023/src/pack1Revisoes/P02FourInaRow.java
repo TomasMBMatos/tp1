@@ -3,9 +3,6 @@ package pack1Revisoes;
 import java.util.Scanner;
 
 public class P02FourInaRow {
-    final static int NCOLS = 7;
-    final static int NROWS = 6;
-
     /**
      * Shows (prints) the board on the console
      *
@@ -13,16 +10,16 @@ public class P02FourInaRow {
      */
     private static void showboard(char[][] board) {
         System.out.println("+---------------+");
-        for(int i = 0; i < NROWS; i++) {
+        for(int i = 0; i < board[i].length; i++) {
             System.out.print("|");
-            for(int j = 0; j < NCOLS; j++) {
-                if(board[j][i] == 0) {
+            // Making 1 row
+            for (char[] col : board) {
+                if (col[i] == 0) {
                     System.out.print(" ");
                     System.out.print("O");
-                }
-                else {
+                } else {
                     System.out.print(" ");
-                    System.out.printf("%s", board[j][i]);
+                    System.out.printf("%s", col[i]);
                 }
             }
             System.out.print(" ");
@@ -46,8 +43,8 @@ public class P02FourInaRow {
         boolean played = false;
         System.out.println("Choose a column (Player "+ player + ")");
         int col = Integer.parseInt(keyboard.nextLine());
-        if(col > NCOLS) play(player, board, keyboard);
-        for(int i = NROWS-1; i >= 0; i--) {
+        if(col > board.length) play(player, board, keyboard);
+        for(int i = board[col-1].length-1; i >= 0; i--) {
             if(board[col-1][i] == 0) {
                 board[col-1][i] = player;
                 played = true;
@@ -72,7 +69,7 @@ public class P02FourInaRow {
      * @return True is that player won the game, or false if not.
      */
     private static boolean lastPlayerWon(char[][] board, int col) {
-        int row = NROWS-1;
+        int row = board[col].length-1;
         while(board[col][row] == 0) {
             row--;
         }
@@ -86,19 +83,19 @@ public class P02FourInaRow {
         switch(n) {
             // left
             case 0:
-                check(board, col, row, -1, 0);
+                if(check(board, col, row, -1, 0)) return true;
             // right
             case 1:
-                check(board, col, row, 1, 0);
+                if(check(board, col, row, 1, 0)) return true;
             // down
             case 2:
-                check(board, col, row, 0, -1);
+                if(check(board, col, row, 0, -1)) return true;
             // left diagonal
             case 3:
-                check(board, col, row, -1, -1);
+                if(check(board, col, row, -1, -1)) return true;
             // right diagonal
             case 4:
-                check(board, col, row, 1, -1);
+                if(check(board, col, row, 1, -1)) return true;
 
         }
         return false;
@@ -108,7 +105,11 @@ public class P02FourInaRow {
         char player = board[col][row];
         int count = 0;
         for(int k = 0; k < 4; k++) {
-            if(board[col+i*k][row+j*k] == player) count++;
+            int col2 = col+i*k;
+            int row2 = row+j*k;
+            if(col2 < board.length && col2 >= 0  && row2 < board[col2].length && row2 >= 0) {
+                if(board[col+i*k][row+j*k] == player) count++;
+            }
         }
         return count == 4;
     }
@@ -120,7 +121,11 @@ public class P02FourInaRow {
      * @return True if there is, at least, one free position on board
      */
     private static boolean existsFreePlaces(char[][] board) {
-        // TODO
+        for(int i=0; i<board[i].length; i++) {
+            for(int j=0; j<board.length; j++) {
+                if(board[j][i] == 0) return true;
+            }
+        }
         return false;
     }
 
@@ -128,11 +133,12 @@ public class P02FourInaRow {
      * Main method - this method should not be changed
      */
     public static void main(String[] args) {
-
+        final int NCOLs = 7;
+        final int NROWS = 6;
 
         // program variables
         Scanner keyboard = new Scanner(System.in);
-        char[][] board = new char[NCOLS][NROWS];
+        char[][] board = new char[NCOLs][NROWS];
         char winner = ' ';
 
         // show empty board
