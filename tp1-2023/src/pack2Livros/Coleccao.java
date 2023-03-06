@@ -1,6 +1,9 @@
 package pack2Livros;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Classe Colecca, deve conter a descrição de uma colecção, com título, seus
@@ -40,8 +43,12 @@ public class Coleccao {
             throw new IllegalArgumentException(
                     "O titulo tem de ter pelo menos um caracter");
         this.titulo = titulo;
+        if(editores.length == 0 ||
+                editores == null ||
+                Arrays.stream(editores).anyMatch(Objects::isNull))
+            throw new IllegalArgumentException("O array de editores não pode estar vazio");
+        this.editores = editores;
 
-        // TODO
     }
 
     /**
@@ -85,7 +92,14 @@ public class Coleccao {
      */
     public boolean addLivro(Livro livro) {
         int idx = getIndexOfLivro(livro.getTitulo());
-
+        if(idx == -1) {
+            Livro[] copy = new Livro[livros.length+1];
+            System.arraycopy(livros, 0, copy, 0, livros.length-1);
+            copy[livros.length] = livro;
+            livros = copy;
+            numLivros++;
+            return true;
+        }
         return false;
     }
 
@@ -148,15 +162,14 @@ public class Coleccao {
      * utilizar o método mergeWithoutRepetitions
      */
     public String[] getAutoresEditores() {
-        String[] AE;
-        String[] copy;
+        ArrayList<String> AE = new ArrayList<>();
+        String[] ret;
         for(Livro livro : livros) {
-            AE = livro.getAutores();
-            copy = new String[livro.getAutores().length];
-            System.arraycopy(AE, );
+            AE.addAll(Arrays.asList(livro.getAutores()));
         }
-
-        return null;
+        ret = new String[AE.size()];
+        System.arraycopy(AE, 0, ret, 0, AE.size()-1);
+        return mergeWithoutRepetitions(ret, editores);
     }
 
     /**
@@ -164,8 +177,10 @@ public class Coleccao {
      * todos os elementos dos arrays recebidos mas sem repetições
      */
     private static String[] mergeWithoutRepetitions(String[] a1, String[] a2) {
-        // TODO
-        return null;
+        // Using concat to merge both arrays, then using distinct to filter out
+        // the duplicates and then converting back to a String Array
+        return Stream.concat(Stream.of(a1), Stream.of(a2)).
+                distinct().toArray(String[]::new);
     }
 
     /**

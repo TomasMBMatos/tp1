@@ -44,9 +44,9 @@ public class Livro {
         this.preco = preco;
         if(autores.length == 0 || Arrays.stream(autores).anyMatch(Objects::isNull))
             throw new IllegalArgumentException("O array de autores não pode estar vazio");
-        else if(validarNomes(autores))
+        if(validarNomes(autores))
             throw new IllegalArgumentException("Existe pelo menos um nome inválido");
-        else if(haRepeticoes(autores))
+        if(haRepeticoes(autores))
             throw new IllegalArgumentException("O array de autores contém autores repetidos");
         String[] lAutores = new String[autores.length];
         for(int i=0;i<autores.length;i++) {
