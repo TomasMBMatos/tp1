@@ -54,8 +54,8 @@ public class P02FourInaRow {
         if(!played) {
             play(player, board, keyboard);
         }
-        lastPlayerWon(board, col-1);
-        return 0;
+        //lastPlayerWon(board, col-1);
+        return col-1;
     }
 
     /**
