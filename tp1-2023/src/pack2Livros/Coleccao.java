@@ -1,8 +1,6 @@
 package pack2Livros;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -63,8 +61,8 @@ public class Coleccao {
      */
     public int getNumPaginas() {
         int numPaginas = 0;
-        for(Livro livro : livros) {
-            numPaginas += livro.getNumPaginas();
+        for(int i=0; i<numLivros; i++) {
+            numPaginas += livros[i].getNumPaginas();
         }
         return numPaginas;
     }
@@ -76,12 +74,12 @@ public class Coleccao {
      */
     public float getPreco() {
         float preco = 0.0f;
-        for(Livro livro : livros) {
-            if(livros.length >= 4) {
-                if(livro.getNumPaginas() > 200 && livro.getPreco() >= 10.0f) {
-                    preco += livro.getPreco() * 0.8;
+        for(int i=0; i<numLivros;i++) {
+            if(numLivros >= 4) {
+                if(livros[i].getNumPaginas() > 200 && livros[i].getPreco() >= 10.0f) {
+                    preco += livros[i].getPreco() * 0.8;
                 }
-            } else preco += livro.getPreco();
+            } else preco += livros[i].getPreco();
         }
         return preco;
     }
@@ -92,11 +90,8 @@ public class Coleccao {
      */
     public boolean addLivro(Livro livro) {
         int idx = getIndexOfLivro(livro.getTitulo());
-        if(idx == -1) {
-            Livro[] copy = new Livro[livros.length+1];
-            System.arraycopy(livros, 0, copy, 0, livros.length-1);
-            copy[livros.length] = livro;
-            livros = copy;
+        if(idx == -1 && numLivros < MAXOBRAS) {
+            livros[numLivros] = livro;
             numLivros++;
             return true;
         }
@@ -109,6 +104,7 @@ public class Coleccao {
      */
     private int getIndexOfLivro(String titulo) {
         for(int i=0; i<livros.length; i++) {
+            if(livros[i]== null) return -1;
             if(livros[i].getTitulo().equals(titulo)) return i;
         }
         return -1;
@@ -122,10 +118,14 @@ public class Coleccao {
      */
     public Livro remLivro(String titulo) {
         int idx = getIndexOfLivro(titulo);
-        Livro[] copy = new Livro[livros.length-1];
-        System.arraycopy(livros, 0, copy, 0, idx);
-        System.arraycopy(livros, idx+1, copy, idx, livros.length-idx-1);
-        return livros[idx];
+        if(idx == -1) return null;
+        ArrayList<Livro> ar = new ArrayList<>();
+        Collections.addAll(ar, livros);
+        Livro l = ar.get(idx);
+        ar.remove(idx);
+        livros = ar.toArray(Livro[]::new);
+        numLivros--;
+        return l;
     }
 
     /**
@@ -133,8 +133,9 @@ public class Coleccao {
      * uma obra para os editores.
      */
     public int getNumObrasFromPerson(String autorEditor) {
-        // TODO
-        return 0;
+        int numObras = getLivrosComoAutor(autorEditor).length;
+        if(Arrays.asList(editores).contains(autorEditor)) numObras++;
+        return numObras;
     }
 
     /**
@@ -142,8 +143,13 @@ public class Coleccao {
      * é autor
      */
     public Livro[] getLivrosComoAutor(String autorNome) {
-        // TODO
-        return null;
+        ArrayList<Livro> ar = new ArrayList<>();
+        for(int i=0;i<numLivros;i++) {
+            if(livros[i].contemAutor(autorNome)) {
+                ar.add(livros[i]);
+            }
+        }
+        return ar.toArray(Livro[]::new);
     }
 
     /**
@@ -152,7 +158,7 @@ public class Coleccao {
     public String toString() {
 //        return titulo + ", editores " + Arrays.toString(editores) + ", "
 //                + numLivros + " livros, " + getNumPaginas() + "p" + getPreco() + "€";
-        return String.format("%s, editores %s, %d livros, %dp %f€",
+        return String.format("Colecção %s, editores %s, %d livros, %dp %2.1f€",
                 titulo, Arrays.toString(editores), numLivros, getNumPaginas(), getPreco());
     }
 
@@ -164,12 +170,11 @@ public class Coleccao {
     public String[] getAutoresEditores() {
         ArrayList<String> AE = new ArrayList<>();
         String[] ret;
-        for(Livro livro : livros) {
-            AE.addAll(Arrays.asList(livro.getAutores()));
+        for(int i=0;i<numLivros;i++) {
+            AE.addAll(Arrays.asList(livros[i].getAutores()));
         }
-        ret = new String[AE.size()];
-        System.arraycopy(AE, 0, ret, 0, AE.size()-1);
-        return mergeWithoutRepetitions(ret, editores);
+        ret = AE.toArray(String[]::new);
+        return mergeWithoutRepetitions(editores, ret);
     }
 
     /**
@@ -189,8 +194,9 @@ public class Coleccao {
      * devem utilizar o método mergeWithoutRepetitions
      */
     public boolean equals(Coleccao c) {
+        int mergeLen = mergeWithoutRepetitions(editores, c.editores).length;
         return titulo.equals(c.titulo) &&
-                mergeWithoutRepetitions(editores, c.editores) == editores;
+                mergeLen == editores.length && mergeLen ==c.editores.length;
     }
 
     /**
@@ -198,6 +204,9 @@ public class Coleccao {
      */
     public void print(String prefix) {
         System.out.println(prefix + String.format(" %s", this));
+        for(int i=0;i<numLivros;i++) {
+            System.out.printf("  %s\n",livros[i]);
+        }
     }
 
     /**

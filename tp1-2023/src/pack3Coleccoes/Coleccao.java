@@ -2,8 +2,9 @@ package pack3Coleccoes;
 
 import pack2Livros.Livro;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Collections;
 
 
 /**
@@ -56,8 +57,7 @@ public class Coleccao {
      *
      */
     public String getTitulo() {
-        // TODO
-        return null;
+        return titulo;
     }
 
     /**
@@ -65,8 +65,14 @@ public class Coleccao {
      * colecções
      */
     public int getNumPaginas() {
-        // TODO
-        return 0;
+        int num = 0;
+        for(int i=0;i<numLivros;i++) {
+            num += livros[i].getNumPaginas();
+        }
+        for(int i=0;i<numColeccoes;i++) {
+            num += coleccoes[i].getNumPaginas();
+        }
+        return num;
     }
 
     /**
@@ -77,7 +83,9 @@ public class Coleccao {
      * desconto de 10% sobre os preços das suas subcolecções
      */
     public float getPreco() {
-        // TODO
+        if(getNumPaginas() > 5000) {
+
+        }
         return 0;
     }
 
@@ -106,7 +114,10 @@ public class Coleccao {
      * pretendido. Devolve -1 caso não o encontre
      */
     private int getIndexOfLivro(String titulo) {
-        // TODO
+        for(int i=0; i<livros.length; i++) {
+            if(livros[i] == null) return -1;
+            if(livros[i].getTitulo().equals(titulo)) return i;
+        }
         return -1;
     }
 
@@ -115,7 +126,10 @@ public class Coleccao {
      * pretendido. Devolve -1 caso não o encontre
      */
     private int getIndexOfColeccao(String titulo) {
-        // TODO
+        for(int i=0; i<coleccoes.length; i++) {
+            if(coleccoes[i]== null) return -1;
+            if(coleccoes[i].getTitulo().equals(titulo)) return i;
+        }
         return -1;
     }
 
@@ -126,8 +140,15 @@ public class Coleccao {
      * sempre os menores índices, ou seja, não pode haver nulls entre os livros
      */
     public Livro remLivro(String titulo) {
-        // TODO
-        return null;
+        int idx = getIndexOfLivro(titulo);
+        if(idx == -1) return null;
+        ArrayList<Livro> ar = new ArrayList<>();
+        Collections.addAll(ar, livros);
+        Livro l = ar.get(idx);
+        ar.remove(idx);
+        livros = ar.toArray(Livro[]::new);
+        numLivros--;
+        return l;
     }
 
     /**
@@ -138,8 +159,15 @@ public class Coleccao {
      * entre elas
      */
     public Coleccao remColeccao(String titulo) {
-        // TODO
-        return null;
+        int idx = getIndexOfColeccao(titulo);
+        if(idx == -1) return null;
+        ArrayList<Coleccao> ar = new ArrayList<>();
+        Collections.addAll(ar, coleccoes);
+        Coleccao c = ar.get(idx);
+        ar.remove(idx);
+        coleccoes = ar.toArray(Coleccao[]::new);
+        numColeccoes--;
+        return c;
     }
 
     /**
@@ -147,8 +175,11 @@ public class Coleccao {
      * como uma obra para os editores.
      */
     public int getNumObrasFromPerson(String autorEditor) {
-        // TODO
-        return 0;
+        int numObras = getLivrosComoAutor(autorEditor).length;
+        for(int i=0;i<numColeccoes;i++) {
+            if(Arrays.asList(coleccoes[i].editores).contains(autorEditor)) numObras++;
+        }
+        return numObras;
     }
 
     /**
@@ -157,16 +188,21 @@ public class Coleccao {
      * utilizar o método mergeWithoutRepetitions
      */
     public Livro[] getLivrosComoAutor(String autorNome) {
-        // TODO
-        return null;
+        ArrayList<Livro> ar = new ArrayList<>();
+        for(int i=0;i<numLivros;i++) {
+            if(livros[i].contemAutor(autorNome)) {
+                ar.add(livros[i]);
+            }
+        }
+        return ar.toArray(Livro[]::new);
     }
 
     /**
      * Deve devolver uma string compatível com os outputs desejados
      */
     public String toString() {
-        // TODO
-        return null;
+        return String.format("Colecção %s, editores %s, %d livros, %dp %2.1f€",
+                titulo, Arrays.toString(editores), numLivros, getNumPaginas(), getPreco());
     }
 
     /**
