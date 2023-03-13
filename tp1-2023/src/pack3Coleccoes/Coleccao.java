@@ -5,6 +5,8 @@ import pack2Livros.Livro;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 
 /**
@@ -49,8 +51,11 @@ public class Coleccao {
             throw new IllegalArgumentException(
                     "O titulo tem de ter pelo menos um caracter");
         this.titulo = titulo;
-
-        // TODO
+        if(editores.length == 0 ||
+        editores == null ||
+        Arrays.stream(editores).anyMatch(Objects::isNull))
+            throw new IllegalArgumentException("O array de editores não pode estar vazio");
+        this.editores = editores;
     }
 
     /**
@@ -83,10 +88,13 @@ public class Coleccao {
      * desconto de 10% sobre os preços das suas subcolecções
      */
     public float getPreco() {
+        float preco = 0.0f;
         if(getNumPaginas() > 5000) {
-
+            for(int i=0; i<numLivros;i++) {
+                preco += livros[i].getPreco() * 0.8;
+            }
         }
-        return 0;
+        return preco;
     }
 
     /**
@@ -95,7 +103,12 @@ public class Coleccao {
      * método getIndexOfLivro e getIndexOfColeccao
      */
     public boolean addLivro(Livro livro) {
-        // TODO
+        int idx = getIndexOfLivro(livro.getTitulo());
+        if(idx == -1 && numLivros+numColeccoes < MAXOBRAS) {
+            livros[numLivros+numColeccoes] = livro;
+            numLivros++;
+            return true;
+        }
         return false;
     }
 
@@ -105,7 +118,13 @@ public class Coleccao {
      * utilizar o método getIndexOfLivro e getIndexOfColeccao
      */
     public boolean addColeccao(Coleccao col) {
-        // TODO
+        if(col == null) return false;
+        int idx = getIndexOfColeccao(col.getTitulo());
+        if(idx == -1 && numColeccoes+numLivros < MAXOBRAS) {
+            coleccoes[numLivros+numColeccoes] = col;
+            numColeccoes++;
+            return true;
+        }
         return false;
     }
 
@@ -211,8 +230,16 @@ public class Coleccao {
      * utilizar o método mergeWithoutRepetitions
      */
     public String[] getAutoresEditores() {
-        // TODO
-        return null;
+        String[] editores = this.editores;
+		for(int i = 0; i < livros.length; i++) {
+			if(livros[i] != null)
+				editores = mergeWithoutRepetitions(editores, livros[i].getAutores());
+		}
+    	for(int i = 0; i < coleccoes.length; i++) {
+    		if(coleccoes[i] != null)
+    			editores = mergeWithoutRepetitions(editores, coleccoes[i].editores);
+    	}	
+		return editores;
     }
 
     /**
@@ -220,16 +247,16 @@ public class Coleccao {
      * todos os elementos dos arrays recebidos mas sem repetições
      */
     private static String[] mergeWithoutRepetitions(String[] a1, String[] a2) {
-        // TODO
-        return null;
+        return Stream.concat(Stream.of(a1), Stream.of(a2)).
+                distinct().toArray(String[]::new);
     }
 
     /**
      * Método idêntico ao método anterior mas agora com arrays de livros
      */
     private static Livro[] mergeWithoutRepetitions(Livro[] a1, Livro[] a2) {
-        // TODO
-        return null;
+        return Stream.concat(Stream.of(a1), Stream.of(a2)).
+                distinct().toArray(Livro[]::new);
     }
 
     /**
@@ -238,8 +265,9 @@ public class Coleccao {
      * devem utilizar o método mergeWithoutRepetitions
      */
     public boolean equals(Coleccao c) {
-        // TODO
-        return false;
+        int mergeLen = mergeWithoutRepetitions(editores, c.editores).length;
+        return titulo.equals(c.titulo) &&
+                mergeLen == editores.length && mergeLen ==c.editores.length;
     }
 
     /**
