@@ -274,7 +274,10 @@ public class Coleccao {
      * Mostra uma colecção segundo os outputs desejados
      */
     public void print(String prefix) {
-        // TODO
+        System.out.println(prefix + String.format(" %s", this));
+        for(int i=0;i<numLivros;i++) {
+            System.out.printf("  %s\n",livros[i]);
+        }
     }
 
     /**
