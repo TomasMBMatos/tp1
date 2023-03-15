@@ -89,11 +89,15 @@ public class Coleccao {
      */
     public float getPreco() {
         float preco = 0.0f;
-        if(getNumPaginas() > 5000) {
-            for(int i=0; i<numLivros;i++) {
-                preco += livros[i].getPreco() * 0.8;
+        for(int i=0; i<numLivros;i++) {
+            if(getNumPaginas() > 5000) {
+            preco += livros[i].getPreco() * 0.8;
+            }
+            else {
+                preco += livros[i].getPreco();
             }
         }
+
         return preco;
     }
 
@@ -104,8 +108,8 @@ public class Coleccao {
      */
     public boolean addLivro(Livro livro) {
         int idx = getIndexOfLivro(livro.getTitulo());
-        if(idx == -1 && numLivros+numColeccoes < MAXOBRAS) {
-            livros[numLivros+numColeccoes] = livro;
+        if(idx == -1 && numLivros < MAXOBRAS) {
+            livros[numLivros] = livro;
             numLivros++;
             return true;
         }
@@ -120,8 +124,8 @@ public class Coleccao {
     public boolean addColeccao(Coleccao col) {
         if(col == null) return false;
         int idx = getIndexOfColeccao(col.getTitulo());
-        if(idx == -1 && numColeccoes+numLivros < MAXOBRAS) {
-            coleccoes[numLivros+numColeccoes] = col;
+        if(idx == -1 && numColeccoes < MAXOBRAS) {
+            coleccoes[numColeccoes] = col;
             numColeccoes++;
             return true;
         }
@@ -194,11 +198,25 @@ public class Coleccao {
      * como uma obra para os editores.
      */
     public int getNumObrasFromPerson(String autorEditor) {
-        int numObras = getLivrosComoAutor(autorEditor).length;
-        for(int i=0;i<numColeccoes;i++) {
-            if(Arrays.asList(coleccoes[i].editores).contains(autorEditor)) numObras++;
+        int cnt = 0;
+        // procurar nos livros
+        for (Livro livro : livros) {
+            if (livro != null) {
+                String[] autoresLivro = livro.getAutores();
+                for (String s : autoresLivro) {
+                    if (autorEditor.equalsIgnoreCase(s)) cnt++;
+                }
+            }
         }
-        return numObras;
+        // procurar na coleção
+
+        for (String editore : editores) if (autorEditor.equalsIgnoreCase(editore)) cnt++;
+
+        // procurar nas sub coleções
+        for( int i = 0; i < numColeccoes; i++ ) {
+            cnt += coleccoes[i].getNumObrasFromPerson(autorEditor);
+        }
+        return cnt;
     }
 
     /**
@@ -207,13 +225,45 @@ public class Coleccao {
      * utilizar o método mergeWithoutRepetitions
      */
     public Livro[] getLivrosComoAutor(String autorNome) {
-        ArrayList<Livro> ar = new ArrayList<>();
-        for(int i=0;i<numLivros;i++) {
-            if(livros[i].contemAutor(autorNome)) {
-                ar.add(livros[i]);
+        Livro[] arrayLivros = new Livro[MAXOBRAS];
+        // Verficar array de livros
+        for (int i=0;i<numLivros;i++) {
+            String[] autores = livros[i].getAutores();
+            // Comparar cada autor do array de autores com a String recebida
+            for (String autor : autores) {
+                if (autor.equalsIgnoreCase(autorNome)) {
+                    arrayLivros[i] = livros[i];
+                    break;
+                }
             }
         }
-        return ar.toArray(Livro[]::new);
+        Livro[] arrayLivrosSec = new Livro[MAXOBRAS];
+        // verificar coleções e os seus livros
+        for (int i=0;i<numColeccoes;i++) {
+            for (int j = 0; j < coleccoes[i].numLivros; j++) {
+                String[] autores = coleccoes[i].livros[j].getAutores();
+                // Comparar cada autor do array de autores com a String recebida
+                for (String autor : autores) {
+                    if (autor.equalsIgnoreCase(autorNome)) {
+                        arrayLivrosSec[j] = coleccoes[i].livros[j];
+                        break;
+                    }
+                }
+            }
+        }
+        Livro[] resultWNulls = mergeWithoutRepetitions(arrayLivros, arrayLivrosSec);
+        int numLivrosAutor = 0;
+        for (Livro resultWNull : resultWNulls) {
+            if (resultWNull != null) numLivrosAutor++;
+        }
+        Livro[] arraySemNulls = new Livro[numLivrosAutor];
+        for( int i = 0, j = 0; i < resultWNulls.length; i++ ) {
+            if( resultWNulls[i] != null ) {
+                arraySemNulls[j] = resultWNulls[i];
+                j++;
+            }
+        }
+        return arraySemNulls;
     }
 
     /**
@@ -231,14 +281,14 @@ public class Coleccao {
      */
     public String[] getAutoresEditores() {
         String[] editores = this.editores;
-		for(int i = 0; i < livros.length; i++) {
-			if(livros[i] != null)
-				editores = mergeWithoutRepetitions(editores, livros[i].getAutores());
-		}
-    	for(int i = 0; i < coleccoes.length; i++) {
-    		if(coleccoes[i] != null)
-    			editores = mergeWithoutRepetitions(editores, coleccoes[i].editores);
-    	}	
+        for (Livro livro : livros) {
+            if (livro != null)
+                editores = mergeWithoutRepetitions(editores, livro.getAutores());
+        }
+        for (Coleccao coleccoe : coleccoes) {
+            if (coleccoe != null)
+                editores = mergeWithoutRepetitions(editores, coleccoe.editores);
+        }
 		return editores;
     }
 
@@ -274,9 +324,15 @@ public class Coleccao {
      * Mostra uma colecção segundo os outputs desejados
      */
     public void print(String prefix) {
-        System.out.println(prefix + String.format(" %s", this));
+        System.out.println(prefix + String.format("%s", this));
         for(int i=0;i<numLivros;i++) {
             System.out.printf("  %s\n",livros[i]);
+        }
+        for(int i=0;i<numColeccoes;i++) {
+            System.out.printf("  %s\n",coleccoes[i]);
+            for(int j=0;j<coleccoes[i].numLivros;j++) {
+                System.out.printf("    %s\n",coleccoes[i].livros[j]);
+            }
         }
     }
 
