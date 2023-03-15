@@ -97,6 +97,9 @@ public class Coleccao {
                 preco += livros[i].getPreco();
             }
         }
+        for(int i = 0; i < numColeccoes;i++) {
+                preco += coleccoes[i].getPreco();
+        }
 
         return preco;
     }
