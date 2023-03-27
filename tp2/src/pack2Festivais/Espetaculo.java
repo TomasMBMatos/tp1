@@ -7,20 +7,28 @@ public class Espetaculo extends Evento{
     private String localidade;
 
     public Espetaculo(String nome, String localidade, int numBilhetes) {
-        // TODO
         super(nome);
         this.localidade = localidade;
         this.numBilhetes = numBilhetes;
+        artistas = new String[10];
     }
 
     public int numActuacoes(String artista) {
-        // TODO
+        for(String art : artistas) {
+            if(art != null) {
+                if(art.equalsIgnoreCase(artista)) return 1;
+            }
+        }
         return 0;
     }
 
     public boolean addArtista(String artista) {
-        // TODO
-        return false;
+        if(nArtistas == artistas.length) return false;
+        for(String art: artistas) {
+            if(art == null || art.equals(artista)) return false;
+
+
+        }
     }
 
     public int getNumBilhetes() {
