@@ -2,6 +2,7 @@ package pack2Festivais;
 
 public class Espetaculo extends Evento{
     private String[] artistas;
+    private int maxArtistas = 10;
     private int nArtistas;
     private int numBilhetes;
     private String localidade;
@@ -10,7 +11,7 @@ public class Espetaculo extends Evento{
         super(nome);
         this.localidade = localidade;
         this.numBilhetes = numBilhetes;
-        artistas = new String[10];
+        artistas = new String[maxArtistas];
     }
 
     public int numActuacoes(String artista) {
@@ -23,7 +24,7 @@ public class Espetaculo extends Evento{
     }
 
     public boolean addArtista(String artista) {
-        if(nArtistas == artistas.length) return false;
+        if(nArtistas == maxArtistas) return false;
         for(String art: artistas) {
             if(art == null || art.equals(artista)) return false;
 
@@ -40,7 +41,6 @@ public class Espetaculo extends Evento{
     }
 
     public String toString() {
-        // TODO
-        return null;
+        return super.toString() + localidade;
     }
 }

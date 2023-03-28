@@ -7,23 +7,13 @@ public abstract class Evento {
         this.nome = nome;
     }
 
-    public int getNumBilhetes() {
-        // TODO
-        return 0;
-    }
+    public abstract int getNumBilhetes()
 
-    public String[] getArtistas() {
-        // TODO
-        return null;
-    }
+    public abstract String[] getArtistas()
 
-    public int numActuacoes(String artista) {
-        // TODO
-        return 0;
-    }
+    public abstract int numActuacoes(String artista)
 
     public String toString() {
-        // TODO
-        return null;
+        return String.format("%s com %d bilhetes e com os artistas %s", nome, getNumBilhetes(), getArtistas());
     }
 }

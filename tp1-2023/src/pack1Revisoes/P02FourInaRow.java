@@ -69,11 +69,11 @@ public class P02FourInaRow {
      * @return True is that player won the game, or false if not.
      */
     private static boolean lastPlayerWon(char[][] board, int col) {
-        int row = board[col].length-1;
+        int row = 0;
         while(board[col][row] == 0) {
-            row--;
+            row++;
         }
-        for(int i = 0; i<=4;i++) {
+        for(int i = 0; i<=6;i++) {
             if(checkAll(board, col, row, i)) return true;
         }
         return false;
@@ -96,6 +96,10 @@ public class P02FourInaRow {
             // right diagonal
             case 4:
                 if(check(board, col, row, 1, -1)) return true;
+            case 5:
+                if(check(board, col, row, -1, 1)) return true;
+            case 6:
+                if(check(board, col, row, 1, 1)) return true;
 
         }
         return false;
@@ -140,6 +144,10 @@ public class P02FourInaRow {
         Scanner keyboard = new Scanner(System.in);
         char[][] board = new char[NCOLs][NROWS];
         char winner = ' ';
+        
+
+        //board[3][2] = 'A';
+
 
         // show empty board
         showboard(board);
