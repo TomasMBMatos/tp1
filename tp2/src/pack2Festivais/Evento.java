@@ -1,7 +1,7 @@
 package pack2Festivais;
 
 public abstract class Evento {
-    private String nome;
+    protected String nome;
 
     public Evento(String nome) {
         this.nome = nome;

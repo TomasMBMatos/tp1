@@ -307,8 +307,7 @@ public class Coleccao extends Obra {
 		for(IObra obra: obras) {
 			int profundidade = 0;
 			if(obra instanceof Coleccao) {
-				profundidade++;
-				profundidade += ((Coleccao) obra).getProfundidade();
+				profundidade += ((Coleccao) obra).getProfundidade() + 1;
 			}
 			if(profundidade > ret) {
 				ret = profundidade;

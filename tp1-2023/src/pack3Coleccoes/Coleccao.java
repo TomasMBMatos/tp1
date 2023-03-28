@@ -51,9 +51,7 @@ public class Coleccao {
             throw new IllegalArgumentException(
                     "O titulo tem de ter pelo menos um caracter");
         this.titulo = titulo;
-        if(editores.length == 0 ||
-        editores == null ||
-        Arrays.stream(editores).anyMatch(Objects::isNull))
+        if(editores.length == 0 || Arrays.stream(editores).anyMatch(Objects::isNull))
             throw new IllegalArgumentException("O array de editores não pode estar vazio");
         this.editores = editores;
     }

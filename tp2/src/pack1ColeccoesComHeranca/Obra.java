@@ -25,7 +25,7 @@ public abstract class Obra implements IObra {
 
 	/**
 	 * Deve devolver true se o array conter apenas nomes v�lidos. Cada nome deve ser
-	 * validado pelo m�todo validarNome
+	 * validado pelo método validarNome
 	 */
 	public static boolean validarNomes(String[] nomes) {
 		for(String nome: nomes) {
@@ -71,7 +71,7 @@ public abstract class Obra implements IObra {
 	}
 
 	/**
-	 * M�todo que verifica se h� elementos repetidos. O array recebido n�o cont�m
+	 * Método que verifica se h� elementos repetidos. O array recebido n�o cont�m
 	 * nulls.
 	 */
 	public static boolean haRepeticoes(String[] elems) {
@@ -85,7 +85,7 @@ public abstract class Obra implements IObra {
 	}
 
 	/**
-	 * Devolve uma string com a informa��o da obra (ver outputs desejados e m�todo
+	 * Devolve uma string com a informa��o da obra (ver outputs desejados e método
 	 * toString de Livro)
 	 */
 	public String toString() {

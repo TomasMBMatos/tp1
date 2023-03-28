@@ -9,7 +9,6 @@ public class P01CheckPrime {
      * Main, método de arranque da execução
      */
     public static void main(String[] args)  {
-        // TODO
         Scanner in = new Scanner(System.in);
         System.out.println("Intruduza um número inteiro:");
         int number = in.nextInt();
@@ -22,7 +21,6 @@ public class P01CheckPrime {
     }
 
     public static boolean isPrime(int number) {
-        // TODO
         int i = number-1;
         while(i > 1) {
             if(number % i == 0) return false;
