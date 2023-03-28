@@ -2,12 +2,12 @@ package pack2Festivais;
 
 public class Festival extends Evento {
     private Evento[] eventos;
-    privat int maxEventos = 20;
+    private int maxEventos = 20;
     private int numEventos;
 
     public Festival(String nome) {
         super(nome);
-        this.eventos = Evento[maxEventos];
+        this.eventos = new Evento[maxEventos];
     }
 
     @Override

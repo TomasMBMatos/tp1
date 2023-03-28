@@ -30,6 +30,7 @@ public class Espetaculo extends Evento{
 
 
         }
+        return false;
     }
 
     public int getNumBilhetes() {
