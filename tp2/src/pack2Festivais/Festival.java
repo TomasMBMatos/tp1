@@ -1,9 +1,5 @@
 package pack2Festivais;
 
-import pack1ColeccoesComHeranca.Coleccao;
-import pack1ColeccoesComHeranca.IObra;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -116,6 +112,36 @@ public class Festival extends Evento {
     }
 
     public static void main(String[] args) {
+        Festival f1 = new Festival("NosAlive");
 
+        Espetaculo c1 = new Espetaculo("Imagine Dragons", "Lisboa", 20000);
+        Espetaculo c2 = new Espetaculo("Eminem", "Lisboa", 30000);
+        // teste addArtista
+        c1.addArtista("Imagine Dragons");
+        c2.addArtista("Eminem");
+
+        f1.addEvento(c1);
+        f1.addEvento(c2);
+
+        System.out.println("NosAlive com eventos: " + f1);
+
+        f1.delEvento("Eminem");
+
+        System.out.println(f1);
+
+        Festival f2 = new Festival("Rock in Rio");
+        f1.addEvento(f2);
+
+        // teste getDeepFestival
+        System.out.println("Profundidade de f1, valor esperado 2, valor obtido " + f1.getDeepFestival());
+
+        // teste construtor
+        System.out.println("Nome null");
+        try {
+            Festival f3 = new Festival(null);
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println();
+        }
     }
 }
