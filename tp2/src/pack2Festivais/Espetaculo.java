@@ -1,5 +1,10 @@
 package pack2Festivais;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 public class Espetaculo extends Evento{
     private String[] artistas;
     private int maxArtistas = 10;
@@ -28,7 +33,7 @@ public class Espetaculo extends Evento{
     public boolean addArtista(String artista) {
         if(nArtistas == maxArtistas) return false;
         for(int i=0; i<artistas.length;i++) {
-            if(artista == null || artistas[i].equals(artista)) return false;
+            if(artista == null || Objects.equals(artistas[i], artista)) return false;
             if(artistas[i] == null) {
                 artistas[i] = artista;
                 nArtistas++;
@@ -43,11 +48,16 @@ public class Espetaculo extends Evento{
     }
 
     public String[] getArtistas() {
-        return this.artistas;
+        List<String> art = new ArrayList<>();
+        for(String artista : artistas) {
+            if(artista != null)
+                art.add(artista);
+        }
+        return art.toArray(String[]::new);
     }
 
     public String toString() {
-        return super.toString() + localidade;
+        return super.toString();
     }
 
     public static void main(String[] args) {
@@ -59,12 +69,12 @@ public class Espetaculo extends Evento{
         System.out.println(e1);
 
         // teste numAtuacoes
-        System.out.println("Num atuacoes do artista" + e1.numActuacoes("Eminem"));
+        System.out.println("Num atuacoes do artista " + e1.numActuacoes("Eminem"));
 
         // teste construtor
         System.out.println("Nome vazio");
         try {
-            Espetaculo e2 = new Espetaculo(" ", "Lisboa", 20000);
+            Espetaculo e2 = new Espetaculo("", "Lisboa", 20000);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             System.out.println();

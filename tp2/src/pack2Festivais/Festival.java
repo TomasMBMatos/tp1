@@ -69,9 +69,9 @@ public class Festival extends Evento {
     private int getDeepFestival() {
         int ret = 0;
         for(Evento evento: eventos) {
-            int profundidade = 0;
+            int profundidade = 1;
             if(evento instanceof Festival) {
-                profundidade += ((Festival) evento).getDeepFestival() + 1;
+                profundidade += ((Festival) evento).getDeepFestival();
             }
             if(profundidade > ret) {
                 ret = profundidade;
@@ -132,6 +132,8 @@ public class Festival extends Evento {
         Festival f2 = new Festival("Rock in Rio");
         f1.addEvento(f2);
 
+        System.out.println(f1);
+
         // teste getDeepFestival
         System.out.println("Profundidade de f1, valor esperado 2, valor obtido " + f1.getDeepFestival());
 
@@ -141,7 +143,6 @@ public class Festival extends Evento {
             Festival f3 = new Festival(null);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            System.out.println();
         }
     }
 }
