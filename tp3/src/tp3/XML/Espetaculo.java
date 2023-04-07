@@ -1,6 +1,9 @@
 package tp3.XML;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,7 +32,11 @@ public class Espetaculo extends Evento {
 	 * @param numBilhetes o número de bilhetes disponíveis
 	 */
 	public Espetaculo(String nome, String localidade, int numBilhetes) {
-		//TODO
+		super(nome);
+		if( localidade == null || localidade.isBlank() ) throw new IllegalArgumentException("O nome da localidade não pode ser vazio");
+		this.localidade = localidade;
+		if( numBilhetes <= 0 ) throw new IllegalArgumentException("O número de bilhetes tem que ser superior a zero");
+		this.numBilhetes = numBilhetes;
 	}
 
 	/**
@@ -38,7 +45,12 @@ public class Espetaculo extends Evento {
 	 * @Override
 	 */
 	public int numActuacoes(String artista) {
-		//TODO
+		for(String art : artistas) {
+			if(art != null) {
+				if(art.equalsIgnoreCase(artista)) return 1;
+			}
+		}
+		return 0;
 	}
 	
 	/**
@@ -48,7 +60,16 @@ public class Espetaculo extends Evento {
 	 * @return verdadeiro, caso o artista tenha sido adicionado e falso caso contrário.
 	 */
 	public boolean addArtista(String artista) {
-		//TODO
+		if(nArtistas == MAX_ARTISTAS) return false;
+		for(int i=0; i<artistas.length;i++) {
+			if(artista == null || Objects.equals(artistas[i], artista)) return false;
+			if(artistas[i] == null) {
+				artistas[i] = artista;
+				nArtistas++;
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -56,7 +77,7 @@ public class Espetaculo extends Evento {
 	 * @Override
 	 */
 	public int getNumBilhetes() {
-		//TODO
+		return this.numBilhetes;
 	}
 
 	/**
@@ -64,7 +85,12 @@ public class Espetaculo extends Evento {
 	 * @Override
 	 */
 	public String[] getArtistas() {
-		//TODO
+		List<String> art = new ArrayList<>();
+		for(String artista : artistas) {
+			if(artista != null)
+				art.add(artista);
+		}
+		return art.toArray(String[]::new);
 	}
 
 	/**
@@ -72,7 +98,7 @@ public class Espetaculo extends Evento {
 	 * @return a localidade.
 	 */
 	public String getLocalidade() { 
-		//TODO    
+		return this.localidade;
 	}
 	
 	/**
@@ -81,7 +107,7 @@ public class Espetaculo extends Evento {
      * @Override
 	 */
 	public String toString() {
-		//TODO
+		return super.toString();
 	}
 	
 	

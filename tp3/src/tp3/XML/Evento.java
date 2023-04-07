@@ -13,7 +13,7 @@ import org.w3c.dom.*;
  */
 public abstract class Evento {
 	
-	private String nome;
+	protected String nome;
 	
 	public Evento(String nome) {this.nome = nome; }
 	
@@ -34,7 +34,7 @@ public abstract class Evento {
 	 * Nota: Ver o ficheiro OutputPretendido.txt
 	 */
 	public String toString() {
-		//TODO
+		return String.format("%s com %d bilhetes e com os artistas %s", nome, getNumBilhetes(), Arrays.toString(getArtistas()));
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public abstract class Evento {
 	 * @param prefix - Um prefixo para gerar a identação apropriada de acordo com a "profundidade".
 	 */
 	public void print(String prefix) {
-		//TODO
+		System.out.println(prefix + this);
 	}
 	
 	/**
@@ -52,7 +52,14 @@ public abstract class Evento {
 	 * @return o novo Evento associado a esse nNode.
 	 */
 	public static Evento build(Node nNode) {
-		//TODO
+		String nodeName = nNode.getNodeName();
+		if(nodeName.equals("Festival")) {
+			return Festival.build(nNode);
+		}
+		else if(nodeName.equals("Espetaculo")) {
+			return Espetaculo.build(nNode);
+		}
+		return null;
 	}
 	
 }

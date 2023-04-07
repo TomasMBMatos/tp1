@@ -28,7 +28,7 @@ public class Festival extends Evento {
 	private int numEventos = 0;
 	
 	public Festival(String nome) {
-		//TODO
+		super(nome);
 	}
 	
 	/**
@@ -36,18 +36,39 @@ public class Festival extends Evento {
 	 * @return o número de bilhetes existentes no Festival.
 	 */
 	public int getNumBilhetes() {
-		//TODO
+		int cnt = 0;
+		for (Evento evento : eventos) {
+			if (evento != null)
+				cnt += evento.getNumBilhetes();
+		}
+		return cnt;
 	}
 
 	
 	
 	/**
 	 * Retorna o número de actuaçõoes de um determinado artista.
-	 * @param o nome do artista.
+	 * @param artista, o nome do artista.
 	 * @Override 
 	 */
 	public int numActuacoes(String artista) {
-		//TODO
+		int cnt = 0;
+		for(Evento evento : eventos) {
+			if(evento == null) {
+				return 0;
+			}
+			if(evento instanceof Espetaculo) {
+				for(String art : evento.getArtistas()) {
+					if(art.equalsIgnoreCase(artista)) {
+						cnt++;
+					}
+				}
+			}
+			else if(evento instanceof Festival) {
+				cnt += evento.numActuacoes(artista);
+			}
+		}
+		return cnt;
 	}
 	
 	/**
@@ -55,7 +76,7 @@ public class Festival extends Evento {
 	 *  Nota: Ver o ficheiro OutputPretendido/OutputPretendido.txt
 	 */
 	public String toString() {
-		//TODO
+		return "Festival " + super.toString();
 	}
 	
 	/**
@@ -64,7 +85,18 @@ public class Festival extends Evento {
 	 * @return um array contendo os nomes dos artistas. 
 	 */
 	public String[] getArtistas() {
-		//TODO
+		List<String> artistas = new ArrayList<>();
+		for(Evento evento: eventos) {
+			if(evento instanceof Espetaculo) {
+				for(String artista: evento.getArtistas()) {
+					if(evento.getArtistas() != null && !artistas.contains(artista)) artistas.add(artista);
+				}
+			}
+			else if(evento instanceof Festival) {
+				artistas.addAll(Arrays.asList(evento.getArtistas()));
+			}
+		}
+		return artistas.toArray(String[]::new);
 	}
 	
 	/**
@@ -72,7 +104,17 @@ public class Festival extends Evento {
 	 * @return a profundidade máxima.
 	 */
 	public int getDeepFestival() {
-		//TODO
+		int ret = 0;
+		for(Evento evento: eventos) {
+			int profundidade = 1;
+			if(evento instanceof Festival) {
+				profundidade += ((Festival) evento).getDeepFestival();
+			}
+			if(profundidade > ret) {
+				ret = profundidade;
+			}
+		}
+		return ret;
 	}
 	
 	/**
@@ -82,7 +124,18 @@ public class Festival extends Evento {
 	 * @return verdadeiro, se o novo Evento foi adicionado.
 	 */
 	public boolean addEvento(Evento evento) {
-		//TODO
+		if(numEventos == MAX_EVENTOS) return false;
+		for(String artista : evento.getArtistas()) {
+			if(evento.numActuacoes(artista) > numActuacoes(artista) + 2) return false;
+		}
+		for(int i=0;i<eventos.length;i++) {
+			if(eventos[i] == null) {
+				eventos[i] = evento;
+				numEventos++;
+				break;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -91,13 +144,25 @@ public class Festival extends Evento {
 	 * @return verdadeiro, se o Evento foi removido.
 	 */
 	public boolean delEvento(String nomeEvento) {
-		//TODO
+		for(int i=0;i<eventos.length;i++) {
+			if(eventos[i] == null) continue;
+			if(eventos[i].nome.equals(nomeEvento)) {
+				eventos[i] = null;
+				numEventos--;
+				return true;
+			} else if (eventos[i] instanceof Festival) {
+				if(((Festival) eventos[i]).delEvento(nomeEvento)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
 	 * Imprime na consola informações sobre o Festival.
 	 * Nota: Ver o output pretendido em OutputPretendido/OutputPretendido.txt.
-	 * @param o prefixo para identar o Festival de acordo com a sua profundidade.
+	 * @param prefix, o prefixo para identar o Festival de acordo com a sua profundidade.
 	 */
 	public void print(String prefix) {
 		//TODO
