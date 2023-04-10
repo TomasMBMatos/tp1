@@ -4,16 +4,16 @@
 <!ELEMENT BaseDados (Eventos+, Patrocinadores+)>
 <!ELEMENT Localidade (#PCDATA)>
 <!ELEMENT Espetaculo (Nome, Artistas, Localidade)>
-<!ELEMENT Eventos (Festival, Espetaculo)>
+<!ELEMENT Eventos (Espetaculo*, Festival*)>
 <!ELEMENT Festival (Nome, Eventos)>
 <!ELEMENT Nome (#PCDATA)>
 <!ELEMENT Artistas (Artista+)>
 <!ELEMENT Artista (#PCDATA)>
 
-<!ATTLIST Espetaculo codEspetaculo ID>
+<!ATTLIST Espetaculo codEspetaculo ID #IMPLIED>
 <!ATTLIST Espetaculo numBilhetes CDATA #REQUIRED>
 
-<!ATTLIST Festival codFestival ID>
+<!ATTLIST Festival codFestival ID #IMPLIED>
 
-<!ATTLIST Patrocinador codEvento ID #REQUIRED>
+<!ATTLIST Patrocinador codEvento IDREF #REQUIRED>
 <!ATTLIST Patrocinador valor CDATA #REQUIRED>

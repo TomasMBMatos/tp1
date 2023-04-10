@@ -174,7 +174,28 @@ public class Festival extends Evento {
 	 * @return um novo Festival
 	 */
 	public static Festival build(Node nNode) {
-		//TODO
+		String nome = "";
+		ArrayList<Evento> eventos = new ArrayList<>();
+		NodeList list = nNode.getChildNodes();
+		for(int i=0;i<list.getLength(); i++) {
+			if(list.item(i).getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) list.item(i);
+				String nome2 = element.getTagName();
+				if(nome2.equals("Nome")) nome = element.getTextContent();
+				else if(nome2.equals("Eventos")) {
+					for(int j=0;j<element.getChildNodes().getLength();j++) {
+						Node event_node = element.getChildNodes().item(j);
+						if(event_node.getNodeType() == Node.ELEMENT_NODE) eventos.add(Evento.build(event_node));
+					}
+				}
+			}
+
+		}
+		Festival festival = new Festival(nome);
+		for(Evento evento : eventos) {
+			festival.addEvento(evento);
+		}
+		return festival;
 	}
 	
 	/**
@@ -182,7 +203,17 @@ public class Festival extends Evento {
 	 * @param doc o Documento que irá ser usado para gerar o novo Element.
 	 */
 	public Element createElement(Document doc) {
-		//TODO
+		Element festival = doc.createElement("Festival");
+		Element nome = doc.createElement("Nome");
+		nome.appendChild(doc.createTextNode(getNome()));
+		festival.appendChild(nome);
+
+		Element events = doc.createElement("Eventos");
+		for(Evento evento : eventos) {
+			events.appendChild(evento.createElement(doc));
+		}
+		festival.appendChild(events);
+		return festival;
 	}
 	
 	/**
