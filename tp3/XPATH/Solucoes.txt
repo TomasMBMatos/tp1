@@ -1,6 +1,9 @@
-a) TODO
-b) TODO
-c) TODO 
-d) TODO
-e) TODO
-f) TODO
+a) Espetaculo[@numBilhetes >= 500]
+b) Eventos/Festival[Nome = "Músicas do Mundo"]/Eventos/Espetaculo[1]/Nome
+c) Espetaculo[Artistas/Artista="Pablo Milanés"]
+d) count(Eventos/Festival[Nome="Música Cubana"]/Eventos)
+e) Patrocinadores/Patrocinador[Nome = 'EDP']/@codEvento/../Nome
+f) Eventos/Festival[Nome="Músicas do Mundo"]/Festival[Nome="Música Cubana"]/Eventos/Evento[Nome="Pablo Milanés"]/following-sibling::Eventos/Evento
+
+
+

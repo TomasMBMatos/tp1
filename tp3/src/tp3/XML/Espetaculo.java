@@ -117,7 +117,38 @@ public class Espetaculo extends Evento {
 	 * @return um novo Evento
 	 */
 	public static Evento build(Node nNode) {
-		//TODO
+		String numBilhetes = ((Element) nNode).getAttribute("numBilhetes");
+		String nome = "";
+		String localidade = "";
+		ArrayList<String> artistasList = new ArrayList<String>();
+		NodeList list = ((Element) nNode).getChildNodes();
+		for(int i=0;i<list.getLength();i++) {
+			Node node = list.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) node;
+				String nomeElement = element.getTagName();
+				if(nomeElement.equals("Nome")) {
+					nome = element.getTextContent();
+				}
+				else if(nomeElement.equals("Artistas")) {
+					NodeList artistas = element.getChildNodes();
+					for(int j=0;j<artistas.getLength();j++) {
+						Node artista = artistas.item(j);
+						if (artista.getNodeType() == Node.ELEMENT_NODE) {
+							artistasList.add(((Element) artista).getTextContent());
+						}
+					}
+				}
+				else if(nomeElement.equals("Localidade")) {
+					localidade = element.getTextContent();
+				}
+			}
+		}
+		Espetaculo espetaculo = new Espetaculo(nome, localidade, Integer.parseInt(numBilhetes));
+		for(String artista : artistasList) {
+			espetaculo.addArtista(artista);
+		}
+		return espetaculo;
 	}
 	
 	/**
@@ -125,8 +156,24 @@ public class Espetaculo extends Evento {
 	 *  @param doc - o documento que irá gerar o novo Element
 	 */
 	public Element createElement(Document doc) {
-		//TODO
+		Element espetaculo = doc.createElement("Espetaculo");
+		espetaculo.setAttribute("numBilhetes", Integer.toString(numBilhetes));
+		Element nome = doc.createElement("Nome");
+		nome.appendChild(doc.createTextNode(this.nome));
+		espetaculo.appendChild(nome);
+
+		Element elem_artistas = doc.createElement("Artistas");
+		for(String art : artistas) {
+			Element artista = doc.createElement("Artista");
+			artista.appendChild(doc.createTextNode(art));
+			elem_artistas.appendChild(artista);
+		}
+		espetaculo.appendChild(elem_artistas);
+
+		Element localidade = doc.createElement("Localidade");
+		localidade.appendChild(doc.createTextNode(this.localidade));
+		espetaculo.appendChild(localidade);
+
+		return espetaculo;
 	}
-	
-	
 }
