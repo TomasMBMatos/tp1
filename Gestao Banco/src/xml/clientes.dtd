@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT clientes (cliente)*>
+<!ELEMENT  cliente (conta)*>
+<!ATTLIST cliente
+        nome CDATA #REQUIRED
+        apelido CDATA #REQUIRED
+        cc CDATA #REQUIRED>
+<!ELEMENT conta EMPTY>
+<!ATTLIST conta
+        numero CDATA #REQUIRED>

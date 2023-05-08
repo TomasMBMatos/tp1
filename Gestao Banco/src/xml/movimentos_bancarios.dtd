@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT movimentos_bancarios (movimento)*>
+<!ELEMENT movimento (#PCDATA)>
+<!ATTLIST movimento
+        tipo CDATA #REQUIRED
+        data CDATA #REQUIRED
+        valor CDATA #REQUIRED>
