@@ -4,6 +4,7 @@ public class App {
     String username;
     String password;
     Cliente cliente;
+    Banco banco = new Banco();
 
     private void menu() {
         Scanner in = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class App {
                     System.out.println("Password:");
                     password = in.nextLine();
 
-                    boolean registo = registar(username, password);
+                    boolean registo = banco.registar(username, password);
 
                     if (registo) {
                         menuBanco(in, username);
@@ -42,7 +43,7 @@ public class App {
                     System.out.println("Password:");
                     password = in.nextLine();
 
-                    boolean login = login(username, password);
+                    boolean login = banco.login(username, password);
 
                     if (login) {
                         menuBanco(in, username);
@@ -58,6 +59,7 @@ public class App {
 
     private void menuBanco(Scanner in, String username) {
         String option;
+        String montante;
 
         do {
             System.out.printf("--------------- Bem-vindo %s ---------------- \n", username);
@@ -101,19 +103,31 @@ public class App {
 
                     menuBanco(in, username);
                 case "4":
+                    System.out.println("Escolha a conta:");
 
                 case "5":
-
+                    System.out.println("Número da conta:");
+                    System.out.println(cliente.getConta().getNumConta());
                 case "6":
-
+                    System.out.println("Montante que deseja depositar:");
+                    montante = in.nextLine();
+                    cliente.getConta().depositar(Double.parseDouble(montante));
+                    System.out.println("Depositou: " + montante);
                 case "7":
-
+                    System.out.println("Montante que deseja levantar:");
+                    montante = in.nextLine();
+                    cliente.getConta().levantar(Double.parseDouble(montante));
+                    System.out.println("Levantou: " + montante);
                 case "8":
-
+                    System.out.println("Saldo: " + cliente.getConta().getSaldo());
                 case "9":
-
+                    double saldoTotal = 0;
+                    for(Conta cont : cliente.getContas()) {
+                        saldoTotal += cont.getSaldo();
+                    }
+                    System.out.println("Saldo total: " + saldoTotal);
                 case "0":
-
+                    break;
             }
         } while(!option.equals("0"));
     }
@@ -121,6 +135,7 @@ public class App {
     private Conta escolhaContas(Scanner in, String username) {
         String deposito;
         String option;
+        String data;
 
         do {
             System.out.printf("--------------- Bem-vindo %s ---------------- \n", username);
@@ -140,13 +155,15 @@ public class App {
             deposito = in.nextLine();
             switch (option) {
                 case "1":
-                    return new ContaPoupancaHabitacao();
+                    data = in.nextLine();
+                    return new ContaPoupancaHabitacao(deposito, data);
                 case "2":
-                    return new ContaOrdem();
+                    return new ContaOrdem(deposito);
                 case "3":
-                    return new ContaMultibanco();
+                    return new ContaMultibanco(deposito);
                 case "4":
-                    return new ContaPrazo();
+                    data = in.nextLine();
+                    return new ContaPrazo(deposito, data);
                 case "0":
                     menuBanco(in, username);
                 default:
@@ -154,14 +171,6 @@ public class App {
             }
         } while(!option.equals("0"));
         return null;
-    }
-
-    public boolean registar(String username, String password) {
-        return false;
-    }
-
-    public boolean login(String username, String password) {
-        return true;
     }
 
     public static void main(String[] args) {

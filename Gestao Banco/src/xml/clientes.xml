@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE clientes SYSTEM "clientes.dtd">
-<clientes>
-    <cliente nome="Pedro" apelido="Costa" cc="123456789">
-        <conta numero=""/>
-        <conta numero=""/>
-    </cliente>
-</clientes>
