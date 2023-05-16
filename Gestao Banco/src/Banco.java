@@ -6,7 +6,14 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class Banco {
@@ -19,7 +26,7 @@ public class Banco {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            doc = builder.parse("xml/banco.xml");
+            doc = builder.parse("tp1/Gestao Banco/src/xml/banco.xml");
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +37,7 @@ public class Banco {
     }
 
     public boolean registar(String username, String password) {
-        Element clientes = doc.getElementById("clientes");
+        Element clientes = (Element) doc.getElementsByTagName("clientes").item(0);
         Element cliente = doc.createElement("cliente");
         cliente.setAttribute("user", username);
         cliente.setAttribute("password", password);
@@ -74,5 +81,20 @@ public class Banco {
 
     public void removerCliente(Cliente cliente) {
         clientes.remove(cliente);
+    }
+
+    private static void writeXml(Document doc, OutputStream output) throws TransformerException {
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+
+        // pretty print XML
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(output);
+
+        transformer.transform(source, result);
+
     }
 }

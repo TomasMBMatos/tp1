@@ -23,7 +23,7 @@ public class Conta {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            doc = builder.parse("xml/banco.xml");
+            doc = builder.parse("tp1/Gestao Banco/src/xml/banco.xml");
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +39,7 @@ public class Conta {
                 novoNumero = (rng.nextLong() % 100000000000000L) + 5200000000000000L;
             }
         }
-        Element ENumeroConta = doc.getElementById("numeroConta");
+        Element ENumeroConta = (Element) doc.getElementsByTagName("numeroConta").item(0);
         Element ENumero = doc.createElement("numero");
         ENumero.setTextContent(String.valueOf(novoNumero));
         ENumeroConta.appendChild(ENumero);

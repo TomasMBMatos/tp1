@@ -2,18 +2,10 @@
 <!DOCTYPE banco SYSTEM "banco.dtd">
 <banco>
     <clientes>
-        <cliente user="User1" password="teste123">
-            <conta numero="123456789" saldo="100" nome="Pedro" apelido="Costa" cc="123456789"/>
-            <conta numero="987654321" saldo="200" nome="Pedro" apelido="Costa" cc="123456789"/>
-        </cliente>
+
     </clientes>
     <numeroConta>
-        <numero>
-            123456789
-        </numero>
-        <numero>
-            987654321
-        </numero>
+
     </numeroConta>
 </banco>
 

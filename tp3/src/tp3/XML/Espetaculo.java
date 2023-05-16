@@ -107,7 +107,7 @@ public class Espetaculo extends Evento {
      * @Override
 	 */
 	public String toString() {
-		return super.toString();
+		return super.toString() + "em " + localidade;
 	}
 	
 	
@@ -124,24 +124,25 @@ public class Espetaculo extends Evento {
 		NodeList list = ((Element) nNode).getChildNodes();
 		for(int i=0;i<list.getLength();i++) {
 			Node node = list.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element) node;
-				String nomeElement = element.getTagName();
-				if(nomeElement.equals("Nome")) {
-					nome = element.getTextContent();
-				}
-				else if(nomeElement.equals("Artistas")) {
-					NodeList artistas = element.getChildNodes();
-					for(int j=0;j<artistas.getLength();j++) {
-						Node artista = artistas.item(j);
-						if (artista.getNodeType() == Node.ELEMENT_NODE) {
-							artistasList.add(((Element) artista).getTextContent());
-						}
+			if (node.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+			Element element = (Element) node;
+			String nomeElement = element.getTagName();
+			if(nomeElement.equals("Nome")) {
+				nome = element.getTextContent();
+			}
+			else if(nomeElement.equals("Artistas")) {
+				NodeList artistas = element.getChildNodes();
+				for(int j=0;j<artistas.getLength();j++) {
+					Node artista = artistas.item(j);
+					if (artista.getNodeType() == Node.ELEMENT_NODE) {
+						artistasList.add(((Element) artista).getTextContent());
 					}
 				}
-				else if(nomeElement.equals("Localidade")) {
-					localidade = element.getTextContent();
-				}
+			}
+			else if(nomeElement.equals("Localidade")) {
+				localidade = element.getTextContent();
 			}
 		}
 		Espetaculo espetaculo = new Espetaculo(nome, localidade, Integer.parseInt(numBilhetes));
@@ -162,13 +163,13 @@ public class Espetaculo extends Evento {
 		nome.appendChild(doc.createTextNode(this.nome));
 		espetaculo.appendChild(nome);
 
-		Element elem_artistas = doc.createElement("Artistas");
+		Element elemArtistas = doc.createElement("Artistas");
 		for(String art : artistas) {
 			Element artista = doc.createElement("Artista");
 			artista.appendChild(doc.createTextNode(art));
-			elem_artistas.appendChild(artista);
+			elemArtistas.appendChild(artista);
 		}
-		espetaculo.appendChild(elem_artistas);
+		espetaculo.appendChild(elemArtistas);
 
 		Element localidade = doc.createElement("Localidade");
 		localidade.appendChild(doc.createTextNode(this.localidade));

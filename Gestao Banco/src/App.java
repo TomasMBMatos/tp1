@@ -29,12 +29,11 @@ public class App {
 
                     System.out.println("Password:");
                     password = in.nextLine();
+                    
+                    banco.registar(username, password);
 
-                    boolean registo = banco.registar(username, password);
+                    menuBanco(in, username);
 
-                    if (registo) {
-                        menuBanco(in, username);
-                    }
                     break;
                 case "2":
                     System.out.println("Nome de utilizador:");
@@ -107,6 +106,9 @@ public class App {
 
                 case "5":
                     System.out.println("Número da conta:");
+                    if(cliente == null) {
+                        System.out.println("Ainda não criou nenhuma conta");
+                    }
                     System.out.println(cliente.getConta().getNumConta());
                 case "6":
                     System.out.println("Montante que deseja depositar:");
