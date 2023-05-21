@@ -41,9 +41,13 @@ public class P02FourInaRow {
      */
     private static int play(char player, char[][] board, Scanner keyboard) {
         boolean played = false;
-        System.out.println("Choose a column (Player "+ player + ")");
-        int col = Integer.parseInt(keyboard.nextLine());
-        if(col > board.length) play(player, board, keyboard);
+        boolean x = false;
+        int col = 0;
+        while(!x) {
+            System.out.println("Choose a column (Player "+ player + ")");
+            col = Integer.parseInt(keyboard.nextLine());
+            if(col < board.length && col > 0) x = true;
+        }
         for(int i = board[col-1].length-1; i >= 0; i--) {
             if(board[col-1][i] == 0) {
                 board[col-1][i] = player;

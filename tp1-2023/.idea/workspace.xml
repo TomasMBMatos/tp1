@@ -5,7 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbfccfee-8b27-4533-b84e-a1d977f74a43" name="Changes" comment="Fixed a quick bug in getPreco()">
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Banco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Conta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaMultibanco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaOrdem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaPoupancaHabitacao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaPrazo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/xml/movimentos.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/xml/movimentos.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P01CheckPrime.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P01CheckPrime.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P02FourInaRow.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P02FourInaRow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P03WorkWithStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P03WorkWithStrings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Coleccao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Coleccao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Livro.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Livro.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack3Coleccoes/Coleccao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack3Coleccoes/Coleccao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pack1Revisoes/P02FourInaRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pack1Revisoes/P02FourInaRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tp1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../tp1.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +47,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomas/Documents/College/LEIM/MoP&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -109,6 +130,8 @@
       <workItem from="1678910426361" duration="84000" />
       <workItem from="1679260695847" duration="256000" />
       <workItem from="1679441959901" duration="20000" />
+      <workItem from="1682282477673" duration="173000" />
+      <workItem from="1683478377994" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="Trying to fix repo">
       <created>1677862656293</created>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE banco SYSTEM "banco.dtd">
+<banco>
+    <clientes>
+        <cliente password="1" user="admin">
+            <conta apelido="conta" nome="multibanco" tipo="Multibanco">
+                <saldo>190.0</saldo>
+                <numero>5113372780907934</numero>
+                <cc>123123123</cc>
+                <movimentos>
+                </movimentos>
+            </conta>
+        </cliente>
+    </clientes>
+</banco>

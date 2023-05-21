@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE movimentos_bancarios SYSTEM "movimentos_bancarios.dtd">
-<movimentos_bancarios>
-    <movimento tipo="levantamento" data="2023-05-06" valor="500.00"/>
-    <movimento tipo="deposito" data="2023-05-05" valor="1000.00"/>
-    <movimento tipo="deposito" data="2023-05-04" valor="750.00"/>
-    <movimento tipo="levantamento" data="2023-05-03" valor="200.00"/>
-</movimentos_bancarios>
-

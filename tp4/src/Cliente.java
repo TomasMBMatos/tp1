@@ -1,10 +1,23 @@
+import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class App {
-    String username;
-    String password;
-    Cliente cliente;
+public class Cliente {
+
+
+    String username, password;
     Banco banco = new Banco();
+    private Conta conta;
+    private final ArrayList<Conta> contas = new ArrayList<>();
+
+    public Cliente() {
+
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
 
     private void menu() {
         Scanner in = new Scanner(System.in);
@@ -29,8 +42,8 @@ public class App {
 
                     System.out.println("Password:");
                     password = in.nextLine();
-                    
-                    banco.registar(username, password);
+
+                    banco.registar(this);
 
                     menuBanco(in, username);
 
@@ -42,16 +55,17 @@ public class App {
                     System.out.println("Password:");
                     password = in.nextLine();
 
-                    boolean login = banco.login(username, password);
+                    boolean login = banco.login(this);
 
                     if (login) {
+                        conta = banco.getConta(this, 0);
                         menuBanco(in, username);
                     }
                     break;
                 case "0":
                     break;
                 default:
-                    System.out.println("Escolha uma opÃ§Ã£o do menu.");
+                    System.out.println("Escolha uma opção do menu.");
             }
         } while(!option.equals("0"));
     }
@@ -66,11 +80,11 @@ public class App {
             System.out.println("2 - Saber data");
             System.out.println("3 - Criar conta");
             System.out.println("4 - Selecionar conta");
-            System.out.println("5 - Saber o nÃºmero da conta selecionada");
+            System.out.println("5 - Saber o número da conta selecionada");
             System.out.println("6 - Depositar");
             System.out.println("7 - Levantar");
             System.out.println("8 - Saber saldo");
-            System.out.println("9 â€“ Saber total dos saldos das contas");
+            System.out.println("9 – Saber total dos saldos das contas");
             System.out.println("0 - Terminar");
             String opt = in.nextLine();
 
@@ -82,67 +96,76 @@ public class App {
             switch (option) {
                 case "1", "2":
                     System.out.println("Por implementar...");
-                    menuBanco(in, username);
+                    break;
                 case "3":
                     String nome;
                     String apelido;
                     String cc;
-                    Conta conta;
                     System.out.println("Primeiro nome:");
                     nome = in.nextLine();
-                    System.out.println("Ãšltimo nome:");
+                    System.out.println("Último nome:");
                     apelido = in.nextLine();
                     System.out.println("NIF:");
                     cc = in.nextLine();
 
-                    conta = escolhaContas(in, username);
-                    cliente = new Cliente(nome, apelido, cc, conta);
+                    conta = escolhaContas(in, username, nome, apelido, cc);
+
 
                     System.out.println("Conta criada com sucesso!");
 
-                    menuBanco(in, username);
+                    break;
                 case "4":
                     System.out.println("Escolha a conta:");
+                    for(int i=0;i<banco.getContas(this).getLength();i++) {
 
-                case "5":
-                    System.out.println("NÃºmero da conta:");
-                    if(cliente == null) {
-                        System.out.println("Ainda nÃ£o criou nenhuma conta");
+                        contas.add(banco.getConta(this, i));
+                        System.out.println(banco.getConta(this, i));
                     }
-                    System.out.println(cliente.getConta().getNumConta());
+                    String index = in.nextLine();
+                    this.conta = contas.get(Integer.parseInt(index)-1);
+                    System.out.println("Conta escolhida:" + conta);
+                    break;
+                case "5":
+                    System.out.println("Número da conta:");
+                    System.out.println(conta.getNumConta());
+                    break;
                 case "6":
                     System.out.println("Montante que deseja depositar:");
                     montante = in.nextLine();
-                    cliente.getConta().depositar(Double.parseDouble(montante));
+                    banco.depositar(Double.parseDouble(montante), getConta());
                     System.out.println("Depositou: " + montante);
+                    break;
                 case "7":
                     System.out.println("Montante que deseja levantar:");
                     montante = in.nextLine();
-                    cliente.getConta().levantar(Double.parseDouble(montante));
-                    System.out.println("Levantou: " + montante);
+                    boolean levantamento = banco.levantar(Double.parseDouble(montante), getConta());
+                    if(levantamento)
+                        System.out.println("Levantou: " + montante);
+                    else
+                        System.out.println("Não é possível fazer o levantamento de momento.");
+                    break;
                 case "8":
-                    System.out.println("Saldo: " + cliente.getConta().getSaldo());
+                    System.out.println("Saldo: " + banco.getSaldo(conta));
+                    break;
                 case "9":
-                    double saldoTotal = 0;
-                    for(Conta cont : cliente.getContas()) {
-                        saldoTotal += cont.getSaldo();
-                    }
+                    double saldoTotal = banco.getSaldoTotal(this);
                     System.out.println("Saldo total: " + saldoTotal);
+                    break;
                 case "0":
                     break;
             }
         } while(!option.equals("0"));
     }
 
-    private Conta escolhaContas(Scanner in, String username) {
+    private Conta escolhaContas(Scanner in, String username, String nome, String apelido, String cc) {
         String deposito;
         String option;
         String data;
 
         do {
             System.out.printf("--------------- Bem-vindo %s ---------------- \n", username);
-            System.out.println("1 - Conta PoupanÃ§a-HabitaÃ§Ã£o");
-            System.out.println("2 - Conta Ã¡ ordem");
+            System.out.println("1 - Conta Poupança-Habitação");
+            System.out.println("2 - Conta á ordem");
             System.out.println("3 - Multibanco");
             System.out.println("4 - Conta a prazo");
             System.out.println("0 - Cancelar");
@@ -152,30 +175,42 @@ public class App {
                 option = opt;
             else
                 option = " ";
-
-            System.out.println("DepÃ³sito inicial:");
-            deposito = in.nextLine();
+            Conta aux;
             switch (option) {
                 case "1":
+                    System.out.println("Data (yyyy-MM-dd):");
                     data = in.nextLine();
-                    return new ContaPoupancaHabitacao(deposito, data);
+                    aux = new ContaPoupancaHabitacao(data, nome, apelido, cc);
+                    banco.addConta(this, aux);
+                    return aux;
                 case "2":
-                    return new ContaOrdem(deposito);
+                    System.out.println("Depósito inicial:");
+                    deposito = in.nextLine();
+                    aux = new ContaOrdem(deposito, nome, apelido, cc);
+                    banco.addConta(this, aux);
+                    return aux;
                 case "3":
-                    return new ContaMultibanco(deposito);
+                    System.out.println("Depósito inicial:");
+                    deposito = in.nextLine();
+                    aux = new ContaMultibanco(deposito, nome, apelido, cc);
+                    banco.addConta(this, aux);
+                    return aux;
                 case "4":
+                    System.out.println("Data (yyyy-MM-dd):");
                     data = in.nextLine();
-                    return new ContaPrazo(deposito, data);
+                    aux = new ContaPrazo(data, nome, apelido, cc);
+                    banco.addConta(this, aux);
+                    return aux;
                 case "0":
                     menuBanco(in, username);
                 default:
-                    System.out.println("Escolha uma opÃ§Ã£o do menu");
+                    System.out.println("Escolha uma opção do menu");
             }
         } while(!option.equals("0"));
         return null;
     }
 
     public static void main(String[] args) {
-        new App().menu();
+        new Cliente().menu();
     }
 }
