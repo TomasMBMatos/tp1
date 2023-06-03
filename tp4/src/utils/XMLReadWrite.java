@@ -9,13 +9,10 @@ import java.io.*;
 
 public class XMLReadWrite {
     public static OutputStream bancoOutput;
-    public static FileOutputStream movimentosOutput;
 
     static {
         try {
-            bancoOutput = new FileOutputStream("Gestao Banco/src/xml/banco.xml");
-
-            movimentosOutput = new FileOutputStream("Gestao Banco/src/xml/movimentos_bancarios.xml");
+            bancoOutput = new FileOutputStream("tp4/src/xml/banco.xml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

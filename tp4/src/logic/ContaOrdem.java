@@ -1,3 +1,5 @@
+package logic;
+
 public class ContaOrdem extends Conta {
     public ContaOrdem(String deposito, String nome, String apelido, String cc) {
         super(deposito, null, nome, apelido, cc, "Ordem");

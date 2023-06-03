@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT banco (clientes)>
+<!ELEMENT clientes (cliente*)>
+<!ELEMENT  cliente (conta)*>
+<!ATTLIST cliente
+        user CDATA #REQUIRED
+        password CDATA #REQUIRED>
+<!ELEMENT conta (saldo, numero, cc, data*, movimentos*)>
+<!ATTLIST conta
+        tipo CDATA #REQUIRED
+        nome CDATA #REQUIRED
+        apelido CDATA #REQUIRED>
+<!ELEMENT saldo (#PCDATA)>
+<!ELEMENT cc (#PCDATA)>
+<!ELEMENT numero (#PCDATA)>
+<!ELEMENT data (#PCDATA)>
+<!ELEMENT movimentos (movimento)*>
+<!ELEMENT movimento (#PCDATA)>
+<!ATTLIST movimento
+        tipo CDATA #REQUIRED
+        data CDATA #REQUIRED
+        valor CDATA #REQUIRED>

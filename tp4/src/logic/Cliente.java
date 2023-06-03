@@ -1,4 +1,4 @@
-import org.w3c.dom.NodeList;
+package logic;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,10 +6,10 @@ import java.util.Scanner;
 public class Cliente {
 
 
-    String username, password;
-    Banco banco = new Banco();
-    private Conta conta;
-    private final ArrayList<Conta> contas = new ArrayList<>();
+    protected String username, password;
+    public Banco banco = new Banco();
+    public Conta conta;
+    protected final ArrayList<Conta> contas = new ArrayList<>();
 
     public Cliente() {
 
@@ -17,6 +17,10 @@ public class Cliente {
 
     public Conta getConta() {
         return conta;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     private void menu() {
@@ -65,7 +69,7 @@ public class Cliente {
                 case "0":
                     break;
                 default:
-                    System.out.println("Escolha uma opção do menu.");
+                    System.out.println("Escolha uma opï¿½ï¿½o do menu.");
             }
         } while(!option.equals("0"));
     }
@@ -80,11 +84,11 @@ public class Cliente {
             System.out.println("2 - Saber data");
             System.out.println("3 - Criar conta");
             System.out.println("4 - Selecionar conta");
-            System.out.println("5 - Saber o número da conta selecionada");
+            System.out.println("5 - Saber o nï¿½mero da conta selecionada");
             System.out.println("6 - Depositar");
             System.out.println("7 - Levantar");
             System.out.println("8 - Saber saldo");
-            System.out.println("9 – Saber total dos saldos das contas");
+            System.out.println("9 ï¿½ Saber total dos saldos das contas");
             System.out.println("0 - Terminar");
             String opt = in.nextLine();
 
@@ -103,7 +107,7 @@ public class Cliente {
                     String cc;
                     System.out.println("Primeiro nome:");
                     nome = in.nextLine();
-                    System.out.println("Último nome:");
+                    System.out.println("ï¿½ltimo nome:");
                     apelido = in.nextLine();
                     System.out.println("NIF:");
                     cc = in.nextLine();
@@ -111,7 +115,7 @@ public class Cliente {
                     conta = escolhaContas(in, username, nome, apelido, cc);
 
 
-                    System.out.println("Conta criada com sucesso!");
+                    System.out.println("logic.Conta criada com sucesso!");
 
                     break;
                 case "4":
@@ -123,10 +127,10 @@ public class Cliente {
                     }
                     String index = in.nextLine();
                     this.conta = contas.get(Integer.parseInt(index)-1);
-                    System.out.println("Conta escolhida:" + conta);
+                    System.out.println("logic.Conta escolhida:" + conta);
                     break;
                 case "5":
-                    System.out.println("Número da conta:");
+                    System.out.println("Nï¿½mero da conta:");
                     System.out.println(conta.getNumConta());
                     break;
                 case "6":
@@ -142,7 +146,7 @@ public class Cliente {
                     if(levantamento)
                         System.out.println("Levantou: " + montante);
                     else
-                        System.out.println("Não é possível fazer o levantamento de momento.");
+                        System.out.println("Nï¿½o ï¿½ possï¿½vel fazer o levantamento de momento.");
                     break;
                 case "8":
                     System.out.println("Saldo: " + banco.getSaldo(conta));
@@ -164,10 +168,10 @@ public class Cliente {
 
         do {
             System.out.printf("--------------- Bem-vindo %s ---------------- \n", username);
-            System.out.println("1 - Conta Poupança-Habitação");
-            System.out.println("2 - Conta á ordem");
+            System.out.println("1 - logic.Conta Poupanï¿½a-Habitaï¿½ï¿½o");
+            System.out.println("2 - logic.Conta ï¿½ ordem");
             System.out.println("3 - Multibanco");
-            System.out.println("4 - Conta a prazo");
+            System.out.println("4 - logic.Conta a prazo");
             System.out.println("0 - Cancelar");
             String opt = in.nextLine();
 
@@ -184,13 +188,13 @@ public class Cliente {
                     banco.addConta(this, aux);
                     return aux;
                 case "2":
-                    System.out.println("Depósito inicial:");
+                    System.out.println("Depï¿½sito inicial:");
                     deposito = in.nextLine();
                     aux = new ContaOrdem(deposito, nome, apelido, cc);
                     banco.addConta(this, aux);
                     return aux;
                 case "3":
-                    System.out.println("Depósito inicial:");
+                    System.out.println("Depï¿½sito inicial:");
                     deposito = in.nextLine();
                     aux = new ContaMultibanco(deposito, nome, apelido, cc);
                     banco.addConta(this, aux);
@@ -204,7 +208,7 @@ public class Cliente {
                 case "0":
                     menuBanco(in, username);
                 default:
-                    System.out.println("Escolha uma opção do menu");
+                    System.out.println("Escolha uma opï¿½ï¿½o do menu");
             }
         } while(!option.equals("0"));
         return null;

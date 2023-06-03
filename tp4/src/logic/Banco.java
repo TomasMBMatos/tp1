@@ -1,3 +1,5 @@
+package logic;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -7,21 +9,14 @@ import utils.XMLReadWrite;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public class Banco extends Cliente {
+public class Banco {
     Random rng = new Random();
     ArrayList<Cliente> clientes = new ArrayList<>();
 
@@ -32,7 +27,7 @@ public class Banco extends Cliente {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            xmlFile = new File("Gestao Banco/src/xml/banco.xml");
+            xmlFile = new File("tp4/src/xml/banco.xml");
             this.doc = builder.parse(xmlFile);
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
@@ -107,6 +102,18 @@ public class Banco extends Cliente {
         XMLReadWrite.writeXml(this.doc, xmlFile);
     }
 
+    public Conta removeConta(Conta conta) {
+        NodeList contas = this.doc.getElementsByTagName("conta");
+        for(int i=0; i<contas.getLength();i++) {
+            Element eConta = (Element) contas.item(i);
+            if(eConta.getElementsByTagName("numero").item(0).getTextContent().equals(String.valueOf(conta.getNumConta()))) {
+                eConta.getParentNode().removeChild(eConta);
+            }
+        }
+        XMLReadWrite.writeXml(this.doc, xmlFile);
+        return null;
+    }
+
     private void createMovimento(String tipo,String data, String valor, Conta conta) {
         NodeList contas = doc.getElementsByTagName("conta");
         for(int i=0; i<contas.getLength();i++) {
@@ -153,6 +160,7 @@ public class Banco extends Cliente {
     }
 
     public Conta getConta(Cliente cliente, int index) {
+        Conta aux = null;
         NodeList clientes = doc.getElementsByTagName("cliente");
         for(int i=0;i< clientes.getLength();i++) {
             Element clt = (Element) clientes.item(i);
@@ -168,7 +176,7 @@ public class Banco extends Cliente {
                 String tipo = c.getAttribute("tipo");
                 String numero = c.getElementsByTagName("numero").item(0).getTextContent();
 
-                Conta aux;
+
                 switch (tipo) {
                     case "PoupancaHabitacao" -> {
                         String data = c.getElementsByTagName("data").item(0).getTextContent();
@@ -195,7 +203,7 @@ public class Banco extends Cliente {
                 }
             }
         }
-        return null;
+        return aux;
     }
 
     public Cliente getCliente(long numConta) {

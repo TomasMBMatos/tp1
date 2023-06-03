@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fde9bb1e-5f77-4198-888a-fa48d0d4bd0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Banco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/Conta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaMultibanco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaOrdem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaPoupancaHabitacao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/src/ContaPrazo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/xml/movimentos.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Gestao Banco/xml/movimentos.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P01CheckPrime.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P01CheckPrime.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P02FourInaRow.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P02FourInaRow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P03WorkWithStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack1Revisoes/P03WorkWithStrings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Coleccao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Coleccao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Livro.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack2Livros/Livro.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/tp1/pack3Coleccoes/Coleccao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/tp1/pack3Coleccoes/Coleccao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tp1-2023/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tp1-2023/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tp1-2023/src/pack1Revisoes/P02FourInaRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tp1-2023/src/pack1Revisoes/P02FourInaRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tp1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../tp1.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2PTQAWGyfj98cYieGNBsmzIqCyI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/tomas/Documents/College/LEIM/MoP/tp3",
+    "settings.editor.selected.configurable": "preferences.externalResources",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fde9bb1e-5f77-4198-888a-fa48d0d4bd0d" name="Changes" comment="" />
+      <created>1683478449141</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1683478449141</updated>
+      <workItem from="1683478450309" duration="47000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
