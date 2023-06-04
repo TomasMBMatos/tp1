@@ -45,6 +45,9 @@ public abstract class Conta {
         return data;
     }
     public void setNumConta(long num) {this.numConta = num;}
+    public double getSaldo() {
+        return banco.getSaldo(this);
+    }
 
     /* --------------------------------------------------- */
 

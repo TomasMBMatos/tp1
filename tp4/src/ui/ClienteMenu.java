@@ -135,7 +135,12 @@ public class ClienteMenu extends Cliente {
 				btnLevConta.setForeground(new Color(0,0,0));
 				
 				if(e.getClickCount() == 2) {
-					getSelectedConta(accountsTable.getSelectedRow());
+					Conta conta1 = getSelectedConta(accountsTable.getSelectedRow());
+					if(conta1 != null) {
+						ContaInfoPopup info = new ContaInfoPopup(conta1);
+						info.setLocationRelativeTo(null);
+						info.setVisible(true);
+					}
 				}
 			}
 		});
@@ -176,6 +181,7 @@ public class ClienteMenu extends Cliente {
 		btnCriarConta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CriarContaMenu menu = new CriarContaMenu(aux);
+				menu.setLocationRelativeTo(null);
 				menu.setVisible(true);
 				if(menu.getConta() != null) {
 					conta = menu.getConta();
@@ -239,11 +245,12 @@ public class ClienteMenu extends Cliente {
 	
 	
 	
-	private void getSelectedConta(int selectedRow) {
+	private Conta getSelectedConta(int selectedRow) {
 		for(int i=0;i<banco.getContas(this).getLength();i++) {
             contas.add(banco.getConta(this, i));
         }
 		this.conta = contas.get(selectedRow);
+		return this.conta;
 	}
 
 	private void addContaToTable(Conta conta) {

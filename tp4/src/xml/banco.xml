@@ -1,48 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <banco>
-        
+            
+    
     <clientes>
-                
-        <cliente password="1" user="admin">
                         
+        
+        <cliente password="1" user="admin">
+                                    
+            
             <conta apelido="conta" nome="ordem" tipo="Ordem">
-                                
+                                                
+                
                 <saldo>225.45</saldo>
-                                
+                                                
+                
                 <numero>5248860714887954</numero>
-                                
+                                                
+                
                 <cc>123456543</cc>
-                                
+                                                
+                
                 <movimentos>
                 </movimentos>
-                            
+                                            
+            
             </conta>
-                    
-        </cliente>
-                
-        <cliente password="teste" user="teste">
-                        
-            <conta apelido="asd" nome="asd" tipo="Multibanco">
                                 
-                <saldo>100</saldo>
-                                
-                <numero>5265017528497761</numero>
-                                
-                <cc>123123123</cc>
-                                
-                <movimentos/>
-                            
-            </conta>
-                    
-            <conta apelido="fsdfs" nome="asdasf" tipo="PoupancaHabitacao">
+        
+            <conta apelido="teste" nome="teste" tipo="Prazo">
                 <data>2023-06-04</data>
                 <saldo>0</saldo>
-                <numero>5142093015501985</numero>
+                <numero>5136569270247983</numero>
                 <cc>123123123</cc>
                 <movimentos/>
             </conta>
         </cliente>
+                        
+        
+        <cliente password="teste" user="teste">
+                                    
             
-    </clientes>
+            <conta apelido="asd" nome="asd" tipo="Multibanco">
+                                                
+                
+                <saldo>100</saldo>
+                                                
+                
+                <numero>5265017528497761</numero>
+                                                
+                
+                <cc>123123123</cc>
+                                                
+                
+                <movimentos/>
+                                            
+            
+            </conta>
+                                
+            
+            <conta apelido="fsdfs" nome="asdasf" tipo="PoupancaHabitacao">
+                                
+                <data>2023-06-04</data>
+                                
+                <saldo>0</saldo>
+                                
+                <numero>5142093015501985</numero>
+                                
+                <cc>123123123</cc>
+                                
+                <movimentos/>
+                            
+            </conta>
+                    
+        </cliente>
+                    
     
+    </clientes>
+        
+
 </banco>
